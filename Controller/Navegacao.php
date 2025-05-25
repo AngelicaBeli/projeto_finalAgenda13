@@ -149,5 +149,48 @@ include_once "../View/operacaoNaoRealizda.php";
 }
 break;
 
+if(isset($_POST["btnADM"]))
+{
+include_once '../View/ADMLogin.php';
 }
+
+if(isset($_POST["btnListarCadastrados"]))
+{
+include_once '../View/ADMListarCadastrados.php';
+}
+
+
+include_once '../Model/Usuario.php';
+include_once '../Controller/UsuarioController.php'; if(!isset($_SESSION))
+{
+session_start();
+}
+?>
+
+<?php
+$usuario = new UsuarioController();
+$results = $usuario->gerarLista();
+if($results != null)
+while($row = $results->fetch_object()) {
+echo '<tr>';
+echo '<td style="width: 1%;">'.$row->idusuario.'</td>'; echo '<td style="width:50%;">'.$row->nome.'</td>'; echo '</tr>';
+}
+
+
+if(isset($_POST['btnVoltar']))
+{
+include_once '../View/ADMPrincipal.php';
+}
+
+//--utilizei codigo do video na apostila esta diferente pagina 12-//
+case isset($_POST["btnLoginADM"]);
+require_once '../Controller/AdministradorController.php';
+$aController = new AdministradorController();
+if($aController->login($_POST['txtLoginADM'], $_POST['txtSenhaADM']))
+{
+include_once '../View/ADMPrincipal.php';
+} 
+break;
+}
+
 ?>
